@@ -35,7 +35,10 @@ class PuntoPago {
         let key = 123
         //let signature = base64_encode(hash_hmac('sha1', $str, PUNTOPAGOS_SECRET, true));
 
-        let signature = crypto.createHash('sha1', key).update(str).digest('base64')
+        //let signature = crypto.createHash('sha1', key).update(str).digest('base64')
+
+        let signature = crypto.createHash('sha1').update(str).digest('base64')
+
 
         let object = ` PP PUNTOPAGOS_KEY: ${signature}`
 
