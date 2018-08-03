@@ -1,4 +1,6 @@
 let crypto = require('crypto')
+const axios = require('axios');
+
 
 
 class PuntoPago {
@@ -20,13 +22,26 @@ class PuntoPago {
         
 
     }
-
-    CrearTransaccionMP($trx_id, $medio_pago, $monto)
+    //alo
+    CrearTransaccionMP(trx_id, medio_pago, monto, url)
     {
         const funcion = 'transaccion/crear';
-        let monto_str = number_format($monto, 2, '.', '');
+        let monto_str = number_format(monto, 2, '.', '');
         let data = { trx_id:trx_id, medio_pago:medio_pago, monto:monto_str }
-        let header_array = this.TraerHeader($funcion, $trx_id, $monto_str);
+        let header_array = this.TraerHeader(funcion, trx_id, monto_str);
+
+        axios.post(`${url}/${funcion}`, {
+            headers: header_array,
+            data: data,
+        })
+        .then(function (response) {
+            console.log(response);
+        })
+        .catch(function (error) {
+            console.log(error);
+        });
+
+
         //return json_decode(this.ExecuteCommand(PUNTOPAGOS_URL.'/'.$funcion, $header_array, $data));
     }
 
