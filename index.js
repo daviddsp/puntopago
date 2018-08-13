@@ -5,18 +5,24 @@ const axios = require('axios');
 
 class PuntoPago {
 
-    createTransaction(url, trx_id, monto) {
+    createTransaction(url, trx_id, monto, medio_pago) {
 
-        const process = 'transaccion/crear'
-        let monto_str = '2000';
-    
-        let data = { trx_id:trx_id, monto:monto, monto_str:monto_str };
-        let header_array = this.TraerHeader(process, trx_id, monto_str);
-
-
-        console.log(header_array);
-
-        return trx_id
+        const funcion = 'transaccion/crear';
+        let monto_str = 2000;
+        let data = { trx_id:trx_id, medio_pago:medio_pago, monto:monto }
+        let header_array = this.TraerHeader(funcion, trx_id, medio_pago);
+        axios({
+            method:'POST',
+            url:`${url}/${funcion}`,
+            headers: header_array,
+            data: data
+        })
+        .then(function (response) {
+            console.log(response.data);
+        })
+        .catch(function (error) {
+            console.log(error);
+        });
 
         
         
@@ -26,14 +32,20 @@ class PuntoPago {
     CrearTransaccionMP(trx_id, medio_pago, monto, url)
     {
         const funcion = 'transaccion/crear';
-        let monto_str = number_format(monto, 2, '.', '');
-        let data = { trx_id:trx_id, medio_pago:medio_pago, monto:monto_str }
-        let header_array = this.TraerHeader(funcion, trx_id, monto_str);
+        let monto_str = 2000;
+        let data = { trx_id:1231231357, medio_pago:"3", monto:20000 }
+        let header_array = this.TraerHeader(funcion, 1231231357, 20000);
 
-        axios.post(`${url}/${funcion}`, {
+
+        console.log(header_array);
+        
+
+        axios({
+            method:'POST',
+            url:`${url}/${funcion}`,
             headers: header_array,
-            data: data,
-        })
+            data: data
+          })
         .then(function (response) {
             console.log(response);
         })
